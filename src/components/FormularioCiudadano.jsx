@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from "react";
 import "../styles/formulario.css";
 import bannerImg from "../assets/cc.png";
+import { enviarEmailBienvenida } from "../services/email";
+
+
+
+
 
 export default function FormularioCiudadano() {
     const [form, setForm] = useState({
@@ -44,8 +49,6 @@ export default function FormularioCiudadano() {
 
     /* ================= SUBMIT NORMAL ================= */
     const handleSubmit = (e) => {
-        // En este caso NO hacemos e.preventDefault(), queremos que el formulario se envíe
-        // directamente a Google Apps Script y abra la página de confirmación
         e.target.submit();
     };
 
