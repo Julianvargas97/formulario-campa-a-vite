@@ -19,11 +19,9 @@ export default function FormularioCiudadano() {
         redes: "",
         comentario: "",
         datos: false,
-        referido: "" 
+        referido: ""
     });
 
-    const [enviado, setEnviado] = useState(false);
-    const [loading, setLoading] = useState(false);
     const [showReferido, setShowReferido] = useState(false);
 
     /* ================= HANDLERS ================= */
@@ -44,37 +42,11 @@ export default function FormularioCiudadano() {
         }
     };
 
+    /* ================= SUBMIT NORMAL ================= */
     const handleSubmit = (e) => {
-        e.preventDefault(); // prevenir recarga
-        setLoading(true);
-        setEnviado(false);
-
-        // Envío mediante el form HTML normal (POST a Google Script)
+        // En este caso NO hacemos e.preventDefault(), queremos que el formulario se envíe
+        // directamente a Google Apps Script y abra la página de confirmación
         e.target.submit();
-
-        setTimeout(() => {
-            setLoading(false);
-            setEnviado(true);
-
-            setForm({
-                nombre: "",
-                cedula: "",
-                email: "",
-                telefono: "",
-                municipio: "",
-                zonaPopayan: [],
-                barrio: "",
-                profesion: "",
-                interes: "",
-                vehiculo: "",
-                roles: [],
-                frecuencia: "",
-                redes: "",
-                comentario: "",
-                datos: false,
-                referido: form.referido 
-            });
-        }, 1500);
     };
 
     /* ================= USEEFFECT PARA REFERIDO ================= */
@@ -87,6 +59,7 @@ export default function FormularioCiudadano() {
         }
     }, []);
 
+    /* ================= OPCIONES ================= */
     const municipios = [
         "Popayán", "Almaguer", "Argelia", "Balboa", "Bolívar", "Buenos Aires", "Cajibío",
         "Caldono", "Caloto", "Corinto", "El Tambo", "Florencia", "Guachené", "Guapi",
@@ -97,7 +70,10 @@ export default function FormularioCiudadano() {
         "Timbiquí", "Toribío", "Totoró", "Villa Rica"
     ];
 
-    const zonasPopayan = ["Comuna 1", "Comuna 2", "Comuna 3", "Comuna 4", "Comuna 5", "Comuna 6", "Comuna 7", "Comuna 8", "Comuna 9", "Sector rural"];
+    const zonasPopayan = [
+        "Comuna 1", "Comuna 2", "Comuna 3", "Comuna 4", "Comuna 5", "Comuna 6", "Comuna 7",
+        "Comuna 8", "Comuna 9", "Sector rural"
+    ];
 
     const rolesOpciones = [
         "Logística, Organización de Eventos y Avanzada",
@@ -139,34 +115,26 @@ export default function FormularioCiudadano() {
 
             {/* ================= CARD FORM ================= */}
             <div className="card">
-
-                {enviado && (
-                    <div className="success">
-                        ✅ Formulario enviado correctamente<br />
-                        Gracias por tu apoyo 🙌
-                    </div>
-                )}
-
                 <form
-                    action="https://script.google.com/macros/s/AKfycbyv6zjOYr3pxL0tWfaRwWkGMoBd3Cwhjjl60fQE2StXVcFj2Ljlab2VLzUNvREqxzfG/exec"
+                    action="https://script.google.com/macros/s/AKfycbyDoRVsq-OqvFDuT2LrFbphbOqFGCgMeqsGRDnyCl5ADMB_5mj4cDSN2p22c292f4jY/exec"
                     method="POST"
+                    target="_blank"
                     onSubmit={handleSubmit}
                 >
 
                     {/* 👤 DATOS PERSONALES */}
-                    <h2 className="section full">👤 Datos personales</h2>
+                    <h2 className="section full">
+                        👤 Datos personales
+                        {showReferido && (
+                            <span style={{ marginLeft: "15px", fontWeight: "normal", fontSize: "16px", color: "#555" }}>
+                                — Referido por: C.C {form.referido}
+                            </span>
+                        )}
+                    </h2>
 
                     {showReferido && (
-                        <label>
-                            Referido por: <input
-                                name="referido"
-                                value={form.referido}
-                                readOnly
-                                style={{ marginLeft: "10px" }}
-                            />
-                        </label>
+                        <input type="hidden" name="referido" value={form.referido} />
                     )}
-
 
                     <label>Nombre Completo *</label>
                     <input
@@ -201,16 +169,12 @@ export default function FormularioCiudadano() {
                         onChange={handleChange}
                     />
 
+
                     {/* 📍 UBICACIÓN */}
                     <h2 className="section full">📍 Ubicación</h2>
 
                     <label>¿En qué municipio del Cauca reside actualmente? *</label>
-                    <select
-                        name="municipio"
-                        value={form.municipio || ""}
-                        required
-                        onChange={handleChange}
-                    >
+                    <select name="municipio" value={form.municipio || ""} required onChange={handleChange}>
                         <option value="">Seleccione</option>
                         {municipios.map((m) => <option key={m} value={m}>{m}</option>)}
                     </select>
@@ -218,64 +182,35 @@ export default function FormularioCiudadano() {
                     <label className="full">
                         Opcional ¿Si eres de Popayán en que zonas tienes influencia? (Vives, trabajas o haces trabajo social) SI NO ERES DE POPAYÁN OMITE ESTA PREGUNTA.
                     </label>
-
                     <div className="checkbox-group full">
                         {zonasPopayan.map((z) => (
                             <label key={z} className="checkbox">
-                                <input
-                                    type="checkbox"
-                                    name="zonaPopayan"
-                                    value={z}
-                                    checked={form.zonaPopayan.includes(z)}
-                                    onChange={handleChange}
-                                />
+                                <input type="checkbox" name="zonaPopayan" value={z} checked={form.zonaPopayan.includes(z)} onChange={handleChange} />
                                 <span>{z}</span>
                             </label>
                         ))}
                     </div>
 
                     <label>¿En que barrio o vereda vives? *</label>
-                    <input
-                        name="barrio"
-                        value={form.barrio || ""}
-                        required
-                        onChange={handleChange}
-                    />
+                    <input name="barrio" value={form.barrio || ""} required onChange={handleChange} />
 
                     <label>¿Qué profesión u oficio tienes?</label>
-                    <input
-                        name="profesion"
-                        value={form.profesion || ""}
-                        onChange={handleChange}
-                    />
+                    <input name="profesion" value={form.profesion || ""} onChange={handleChange} />
 
                     {/* ❤️ PARTICIPACIÓN */}
                     <h2 className="section full">❤️ Participación</h2>
-
                     <label className="full">¿Cuál es su nivel de interés para apoyar la campaña? *</label>
                     <div className="radio-group full">
                         {interesOpciones.map((op) => (
                             <label key={op} className="radio">
-                                <input
-                                    type="radio"
-                                    name="interes"
-                                    value={op}
-                                    checked={form.interes === op}
-                                    required
-                                    onChange={handleChange}
-                                />
+                                <input type="radio" name="interes" value={op} checked={form.interes === op} required onChange={handleChange} />
                                 <span>{op}</span>
                             </label>
                         ))}
                     </div>
 
                     <label>¿Tienes vehículo y quieres instalar microperforado en tu carro? *</label>
-                    <select
-                        name="vehiculo"
-                        value={form.vehiculo || ""}
-                        required
-                        onChange={handleChange}
-                    >
+                    <select name="vehiculo" value={form.vehiculo || ""} required onChange={handleChange}>
                         <option value="">Seleccione</option>
                         <option value="Sí">Sí</option>
                         <option value="No">No</option>
@@ -287,13 +222,7 @@ export default function FormularioCiudadano() {
                     <div className="checkbox-group full">
                         {rolesOpciones.map((r) => (
                             <label key={r} className="checkbox">
-                                <input
-                                    type="checkbox"
-                                    name="roles"
-                                    value={r}
-                                    checked={form.roles.includes(r)}
-                                    onChange={handleChange}
-                                />
+                                <input type="checkbox" name="roles" value={r} checked={form.roles.includes(r)} onChange={handleChange} />
                                 <span>{r}</span>
                             </label>
                         ))}
@@ -302,12 +231,7 @@ export default function FormularioCiudadano() {
                     {/* ⏰ DISPONIBILIDAD */}
                     <h2 className="section full">⏰ Disponibilidad</h2>
                     <label>¿Con qué frecuencia podría dedicar tiempo a la campaña? *</label>
-                    <select
-                        name="frecuencia"
-                        value={form.frecuencia || ""}
-                        required
-                        onChange={handleChange}
-                    >
+                    <select name="frecuencia" value={form.frecuencia || ""} required onChange={handleChange}>
                         <option value="">Seleccione una opción</option>
                         <option value="Ocasional">Ocasionalmente (Eventos puntuales)</option>
                         <option value="Semanal">Algunas horas a la semana</option>
@@ -316,12 +240,7 @@ export default function FormularioCiudadano() {
                     </select>
 
                     <label>Por favor, califique su experiencia o habilidad en el uso de Redes Sociales (Facebook, Instagram, WhatsApp, etc.) para fines políticos o de difusión. *</label>
-                    <select
-                        name="redes"
-                        value={form.redes || ""}
-                        required
-                        onChange={handleChange}
-                    >
+                    <select name="redes" value={form.redes || ""} required onChange={handleChange}>
                         <option value="">Seleccione una calificación</option>
                         <option value="1">1 - Baja o nula</option>
                         <option value="2">2 - Básica</option>
@@ -333,28 +252,17 @@ export default function FormularioCiudadano() {
                     {/* 💬 COMENTARIOS */}
                     <h2 className="section full">💬 Comentarios</h2>
                     <label className="full">¿Desea especificar algún comentario adicional o indicar otra forma de apoyo no mencionada?</label>
-                    <textarea
-                        className="full"
-                        name="comentario"
-                        value={form.comentario || ""}
-                        onChange={handleChange}
-                    />
+                    <textarea className="full" name="comentario" value={form.comentario || ""} onChange={handleChange} />
 
                     <label className="checkbox full">
-                        <input
-                            type="checkbox"
-                            name="datos"
-                            checked={form.datos}
-                            required
-                            onChange={handleChange}
-                        />
+                        <input type="checkbox" name="datos" checked={form.datos} required onChange={handleChange} />
                         <span>
                             Acepto el tratamiento de mis datos personales para fines relacionados con la campaña política de César Cristian Representante a la Cámara por El Cauca. He leído y entendido la Política de Tratamiento de Datos Personales disponible en www.cesarcristian.com.
                         </span>
                     </label>
 
-                    <button type="submit" disabled={loading}>
-                        {loading ? "Enviando..." : "Enviar formulario"}
+                    <button type="submit">
+                        Enviar formulario
                     </button>
                 </form>
             </div>
