@@ -116,7 +116,7 @@ export default function FormularioCiudadano() {
             {/* ================= CARD FORM ================= */}
             <div className="card">
                 <form
-                    action="https://script.google.com/macros/s/AKfycbyDoRVsq-OqvFDuT2LrFbphbOqFGCgMeqsGRDnyCl5ADMB_5mj4cDSN2p22c292f4jY/exec"
+                    action="https://script.google.com/macros/s/AKfycbzOThzgcfeC2bqGk4rbCZItLyGI8AEY9lMbKfGy32ZsH9I6qIhEQF5xVc-sISrTZb2t/exec"
                     method="POST"
                     target="_blank"
                     onSubmit={handleSubmit}
