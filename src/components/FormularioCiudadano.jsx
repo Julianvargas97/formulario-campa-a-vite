@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from "react";
 import "../styles/formulario.css";
 import bannerImg from "../assets/cc.png";
+import { enviarEmailBienvenida } from "../services/email";
+
+
+
+
 
 export default function FormularioCiudadano() {
     const [form, setForm] = useState({
@@ -44,13 +49,24 @@ export default function FormularioCiudadano() {
         }
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault(); // prevenir recarga
         setLoading(true);
         setEnviado(false);
 
         // Envío mediante el form HTML normal (POST a Google Script)
         e.target.submit();
+
+
+        await enviarEmailBienvenida({
+            nombre: form.nombre,
+            cedula: form.cedula,
+            correoDestino: form.email,
+            celular: form.telefono,
+            municipio: form.municipio,
+            textoConsecutivo: form.referido || "-"
+        });
+
 
         setTimeout(() => {
             setLoading(false);
