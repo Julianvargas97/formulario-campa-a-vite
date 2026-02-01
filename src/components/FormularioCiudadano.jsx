@@ -44,8 +44,17 @@ export default function FormularioCiudadano() {
     };
 
     /* ================= SUBMIT NORMAL ================= */
-    const handleSubmit = (e) => {
+    const handleSubmit = async(e) => {
         e.target.submit();
+
+        await enviarEmailBienvenida({
+            cedula: form.cedula,
+            celular: form.telefono,
+            correoDestino: form.email,
+            municipio: form.municipio,
+            nombre: form.nombre,
+            textoConsecutivo: `formulario-vinculacion-4f870.web.app?referido=${form.cedula}`
+        })
     };
 
     /* ================= USEEFFECT PARA REFERIDO ================= */
