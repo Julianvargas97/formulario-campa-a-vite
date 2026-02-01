@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../styles/formulario.css";
 import bannerImg from "../assets/cc.png";
 
@@ -19,13 +19,14 @@ export default function FormularioCiudadano() {
         redes: "",
         comentario: "",
         datos: false,
+        referido: "" 
     });
 
     const [enviado, setEnviado] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [showReferido, setShowReferido] = useState(false);
 
     /* ================= HANDLERS ================= */
-
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
 
@@ -43,11 +44,14 @@ export default function FormularioCiudadano() {
         }
     };
 
-    const handleSubmit = () => {
+    const handleSubmit = (e) => {
+        e.preventDefault(); // prevenir recarga
         setLoading(true);
         setEnviado(false);
 
-        // Simulamos que se envió correctamente
+        // Envío mediante el form HTML normal (POST a Google Script)
+        e.target.submit();
+
         setTimeout(() => {
             setLoading(false);
             setEnviado(true);
@@ -68,9 +72,20 @@ export default function FormularioCiudadano() {
                 redes: "",
                 comentario: "",
                 datos: false,
+                referido: form.referido 
             });
         }, 1500);
     };
+
+    /* ================= USEEFFECT PARA REFERIDO ================= */
+    useEffect(() => {
+        const params = new URLSearchParams(window.location.search);
+        const referido = params.get("referido");
+        if (referido) {
+            setForm((prev) => ({ ...prev, referido }));
+            setShowReferido(true);
+        }
+    }, []);
 
     const municipios = [
         "Popayán", "Almaguer", "Argelia", "Balboa", "Bolívar", "Buenos Aires", "Cajibío",
@@ -133,13 +148,25 @@ export default function FormularioCiudadano() {
                 )}
 
                 <form
-                    action="https://script.google.com/macros/s/AKfycbzoCTp5ZdULGBWGcj8BH-j3VUBPp9h8LvWr9LwVBi_1WxvZRX9MtD1yMsqH100ajaM/exec"
+                    action="https://script.google.com/macros/s/AKfycbyv6zjOYr3pxL0tWfaRwWkGMoBd3Cwhjjl60fQE2StXVcFj2Ljlab2VLzUNvREqxzfG/exec"
                     method="POST"
                     onSubmit={handleSubmit}
                 >
 
                     {/* 👤 DATOS PERSONALES */}
                     <h2 className="section full">👤 Datos personales</h2>
+
+                    {showReferido && (
+                        <label>
+                            Referido por: <input
+                                name="referido"
+                                value={form.referido}
+                                readOnly
+                                style={{ marginLeft: "10px" }}
+                            />
+                        </label>
+                    )}
+
 
                     <label>Nombre Completo *</label>
                     <input
