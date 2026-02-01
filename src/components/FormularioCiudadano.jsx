@@ -3,10 +3,6 @@ import "../styles/formulario.css";
 import bannerImg from "../assets/cc.png";
 import { enviarEmailBienvenida } from "../services/email";
 
-
-
-
-
 export default function FormularioCiudadano() {
     const [form, setForm] = useState({
         nombre: "",
@@ -119,7 +115,7 @@ export default function FormularioCiudadano() {
             {/* ================= CARD FORM ================= */}
             <div className="card">
                 <form
-                    action="https://script.google.com/macros/s/AKfycbzOThzgcfeC2bqGk4rbCZItLyGI8AEY9lMbKfGy32ZsH9I6qIhEQF5xVc-sISrTZb2t/exec"
+                    action="https://script.google.com/macros/s/AKfycbyUIGT1es78y6fSNUDoWaTAGeL-69fm2J1tksoRSl5KA6TJznPQU1dNUeAD8mtrjYtI/exec"
                     method="POST"
                     target="_blank"
                     onSubmit={handleSubmit}
