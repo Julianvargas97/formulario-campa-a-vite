@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "../styles/formulario.css";
-import bannerImg from "../assets/cc.png";
+import bannerImg from "../assets/cc2.webp";
 import { enviarEmailBienvenida } from "../services/email";
 
 export default function FormularioCiudadano() {
@@ -10,6 +10,7 @@ export default function FormularioCiudadano() {
         email: "",
         telefono: "",
         municipio: "",
+        municipioFull: "",
         zonaPopayan: [],
         barrio: "",
         profesion: "",
@@ -22,6 +23,7 @@ export default function FormularioCiudadano() {
         datos: false,
         referido: ""
     });
+
 
     const [showReferido, setShowReferido] = useState(false);
 
@@ -39,23 +41,45 @@ export default function FormularioCiudadano() {
         } else if (type === "checkbox") {
             setForm({ ...form, [name]: checked });
         } else {
-            setForm({ ...form, [name]: value });
+            // ------------- 🚀 CONCANTENAR MUNICIPIO -------------
+if (name === "municipioSelect") {
+                const valueConCauca = `${value}, Cauca, Colombia`;
+
+                setForm({
+                    ...form,
+                    municipio: value,
+                    municipioFull: valueConCauca,
+                    ...(value !== "Popayan" ? { zonaPopayan: [] } : {})
+                });
+
+                return;
+            }
+
+
+            setForm({
+                ...form,
+                [name]: value,
+            });
         }
     };
 
-    /* ================= SUBMIT NORMAL ================= */
-    const handleSubmit = async(e) => {
+
+
+    const handleSubmit = async (e) => {
         e.target.submit();
 
         await enviarEmailBienvenida({
             cedula: form.cedula,
             celular: form.telefono,
             correoDestino: form.email,
-            municipio: form.municipio,
+            municipio: form.municipioFull,
             nombre: form.nombre,
-            textoConsecutivo: `formulario-vinculacion-4f870.web.app?referido=${form.cedula}`
+            textoConsecutivo: `formulario-vinculacion-4f870.web.app?referido=${form.cedula}`,
+            zonaPopayan: form.zonaPopayan.length ? form.zonaPopayan.join(", ") : "N/A"
+
         })
     };
+
 
     /* ================= USEEFFECT PARA REFERIDO ================= */
     useEffect(() => {
@@ -69,18 +93,54 @@ export default function FormularioCiudadano() {
 
     /* ================= OPCIONES ================= */
     const municipios = [
-        "Popayán", "Almaguer", "Argelia", "Balboa", "Bolívar", "Buenos Aires", "Cajibío",
-        "Caldono", "Caloto", "Corinto", "El Tambo", "Florencia", "Guachené", "Guapi",
-        "Inzá", "Jambaló", "La Sierra", "La Vega", "López de Micay", "Mercaderes",
-        "Miranda", "Morales", "Padilla", "Páez", "Patía", "Piamonte", "Piendamó",
-        "Puerto Tejada", "Puracé", "Rosas", "San Sebastián", "Santa Rosa",
-        "Santander de Quilichao", "Silvia", "Sotará", "Suárez", "Sucre", "Timbío",
-        "Timbiquí", "Toribío", "Totoró", "Villa Rica"
+        { label: "Popayán", value: "Popayan" },
+        { label: "Almaguer", value: "Almaguer" },
+        { label: "Argelia", value: "Argelia" },
+        { label: "Balboa", value: "Balboa" },
+        { label: "Bolívar", value: "Bolivar" },
+        { label: "Buenos Aires", value: "Buenos Aires" },
+        { label: "Cajibío", value: "Cajibio" },
+        { label: "Caldono", value: "Caldono" },
+        { label: "Caloto", value: "Caloto" },
+        { label: "Corinto", value: "Corinto" },
+        { label: "El Tambo", value: "El Tambo" },
+        { label: "Florencia", value: "Florencia" },
+        { label: "Guachené", value: "Guachene" },
+        { label: "Guapi", value: "Guapi" },
+        { label: "Inzá", value: "Inza" },
+        { label: "Jambaló", value: "Jambalo" },
+        { label: "La Sierra", value: "La Sierra" },
+        { label: "La Vega", value: "La Vega" },
+        { label: "López de Micay", value: "Lopez de Micay" },
+        { label: "Mercaderes", value: "Mercaderes" },
+        { label: "Miranda", value: "Miranda" },
+        { label: "Morales", value: "Morales" },
+        { label: "Padilla", value: "Padilla" },
+        { label: "Páez", value: "Paez" },
+        { label: "Patía", value: "Patia" },
+        { label: "Piamonte", value: "Piamonte" },
+        { label: "Piendamó", value: "Piendamo" },
+        { label: "Puerto Tejada", value: "Puerto Tejada" },
+        { label: "Puracé", value: "Purace" },
+        { label: "Rosas", value: "Rosas" },
+        { label: "San Sebastián", value: "San Sebastian" },
+        { label: "Santa Rosa", value: "Santa Rosa" },
+        { label: "Santander de Quilichao", value: "Santander de Quilichao" },
+        { label: "Silvia", value: "Silvia" },
+        { label: "Sotará", value: "Sotara" },
+        { label: "Suárez", value: "Suarez" },
+        { label: "Sucre", value: "Sucre" },
+        { label: "Timbío", value: "Timbio" },
+        { label: "Timbiquí", value: "Timbiki" },
+        { label: "Toribío", value: "Toribio" },
+        { label: "Totoró", value: "Totoro" },
+        { label: "Villa Rica", value: "Villa Rica" }
     ];
+
 
     const zonasPopayan = [
         "Comuna 1", "Comuna 2", "Comuna 3", "Comuna 4", "Comuna 5", "Comuna 6", "Comuna 7",
-        "Comuna 8", "Comuna 9", "Sector rural"
+        "Comuna 8", "Comuna 9"
     ];
 
     const rolesOpciones = [
@@ -110,16 +170,36 @@ export default function FormularioCiudadano() {
         <div className="contenedor">
 
             {/* ================= HERO ================= */}
+            {/* ================= HERO MEJORADO ================= */}
             <section className="hero">
                 <div className="hero-content">
+
                     <div className="hero-text">
-                        <h1>Formulario de vinculación - César Cristian a la Cámara L-101</h1>
-                        <p>¡Gracias por su interés en apoyar la campaña de César Cristian! Con este formulario recopilamos información para coordinar su colaboración.</p>
-                        <p className="nota">SI DESEAS QUE SE COLOQUE EL MICROPERFORADO A TU CARRO MARCA SI EN LA OPCIÓN CORRESPONDIENTE.</p>
+                        <h1>
+                            Formulario de vinculación - César Cristian a la Cámara L-101
+                        </h1>
+
+                        <p>
+                            ¡Gracias por su interés en apoyar la campaña de César Cristian!
+                            Con este formulario recopilamos información para coordinar su colaboración.
+                        </p>
+
+                        <p className="nota">
+                            SI DESEAS QUE SE COLOQUE EL MICROPERFORADO A TU CARRO MARCA SI EN LA OPCIÓN CORRESPONDIENTE.
+                        </p>
                     </div>
-                    <img src={bannerImg} alt="Candidato" className="hero-img" />
+
+                    <img
+                        src={bannerImg}
+                        alt="Candidato"
+                        className="hero-img"
+                        loading="lazy"
+                        decoding="async"
+                    />
+
                 </div>
             </section>
+
 
             {/* ================= CARD FORM ================= */}
             <div className="card">
@@ -182,22 +262,50 @@ export default function FormularioCiudadano() {
                     <h2 className="section full">📍 Ubicación</h2>
 
                     <label>¿En qué municipio del Cauca reside actualmente? *</label>
-                    <select name="municipio" value={form.municipio || ""} required onChange={handleChange}>
+                    <select
+  name="municipioSelect"
+                          value={form.municipio || ""}
+                        required
+                        onChange={handleChange}
+                    >
                         <option value="">Seleccione</option>
-                        {municipios.map((m) => <option key={m} value={m}>{m}</option>)}
+                        {municipios.map((m) => (
+                            <option key={m.value} value={m.value}>
+                                {m.label}
+                            </option>
+                        ))}
                     </select>
 
-                    <label className="full">
-                        Opcional ¿Si eres de Popayán en que zonas tienes influencia? (Vives, trabajas o haces trabajo social) SI NO ERES DE POPAYÁN OMITE ESTA PREGUNTA.
-                    </label>
-                    <div className="checkbox-group full">
-                        {zonasPopayan.map((z) => (
-                            <label key={z} className="checkbox">
-                                <input type="checkbox" name="zonaPopayan" value={z} checked={form.zonaPopayan.includes(z)} onChange={handleChange} />
-                                <span>{z}</span>
+                    {/* CAMPO OCULTO PARA ENVIAR "Municipio, Cauca, Colombia" */}
+                    <input type="hidden" name="municipio" value={form.municipioFull} />
+
+
+
+                    {form.municipio === "Popayan" && (
+                        <>
+                            <label className="full">
+                                Opcional ¿Si eres de Popayán en que zonas tienes influencia? (Vives, trabajas o haces trabajo social) SI NO ERES DE POPAYÁN OMITE ESTA PREGUNTA.
                             </label>
-                        ))}
-                    </div>
+
+                            <div className="checkbox-group full">
+                                {zonasPopayan.map((z) => (
+                                    <label key={z} className="checkbox">
+                                        <input
+                                            type="checkbox"
+                                            name="zonaPopayan"
+                                            value={z}
+                                            checked={form.zonaPopayan.includes(z)}
+                                            onChange={handleChange}
+                                        />
+                                        <span>{z}</span>
+                                    </label>
+                                ))}
+                            </div>
+                        </>
+                    )}
+
+
+
 
                     <label>¿En que barrio o vereda vives? *</label>
                     <input name="barrio" value={form.barrio || ""} required onChange={handleChange} />

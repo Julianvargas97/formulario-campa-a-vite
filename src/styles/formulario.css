@@ -8,9 +8,10 @@
 body {
   background: linear-gradient(180deg, #eef2f6, #f7f9fb);
   color: #2d3436;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
 
-/* ================= CONTENEDOR ================= */
 .contenedor {
   width: 100%;
   min-height: 100vh;
@@ -19,91 +20,134 @@ body {
   align-items: center;
 }
 
-/* ================= HERO ================= */
+
+/* HERO */
+
 .hero {
   width: 100%;
-  padding: 60px 30px 110px;
-  background: linear-gradient(135deg, #a97e7e 0%, #cd0404 100%);
+.hero {
+  padding: clamp(25px, 4vw, 60px) 5% 0;
+}
   color: white;
   position: relative;
   overflow: hidden;
+
+  background:
+    radial-gradient(circle at 78% 55%, rgba(255,255,255,.35), transparent 40%),
+    radial-gradient(circle at 15% 10%, rgba(255,255,255,.25), transparent 35%),
+    radial-gradient(circle at 50% 120%, rgba(0,0,0,.55), transparent 60%),
+    linear-gradient(140deg,
+      #E10613 0%,
+      #B5121B 35%,
+      #8e0e15 65%,
+      #5A060A 100%
+    );
 }
 
 .hero::after {
   content: "";
   position: absolute;
-  bottom: -60px;
-  left: 0;
+  bottom: -15px;
   width: 100%;
-  height: 140px;
-  background: #eef2f6;
-  border-radius: 60% 60% 0 0;
-  z-index: 1; /* CORREGIDO: para que la card quede encima */
+  height: 160px;
+  background: #ffffff;
+  border-top-left-radius: 80% 100%;
+  border-top-right-radius: 80% 100%;
+  z-index: 1;
 }
 
-/* Contenido del hero: ancho casi completo */
 .hero-content {
-  width: 95%;
-  max-width: none; /* Para que no se encoga */
+  width: min(95%, 1400px);
   margin: 0 auto;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 40px;
+  gap: 70px;
   position: relative;
   z-index: 2;
 }
 
+
+/* TEXTO */
+
 .hero-text {
   flex: 1;
-  min-width: 280px;
+  max-width: 650px;
 }
 
 .hero-text h1 {
-  font-size: 2.4rem;
-  font-weight: 800;
-  line-height: 1.2;
-  margin-bottom: 14px;
+  font-size: clamp(1.8rem, 4vw, 3.8rem);
+  font-weight: 900;
+  line-height: 1.1;
+  margin-bottom: 20px;
 }
 
 .hero-text p {
-  font-size: 1.05rem;
-  opacity: 0.95;
-  margin-bottom: 6px;
+  font-size: clamp(0.95rem, 1.3vw, 1.15rem);
+  opacity: .95;
 }
 
 .hero-text .nota {
+  margin-top: 14px;
   font-weight: 700;
-  margin-top: 12px;
-  font-size: 0.95rem;
 }
 
-/* Imagen del hero */
+
+/* IMAGEN */
+
 .hero-img {
   flex: 1;
-  max-width: 400px; /* más grande para verse mejor */
   width: 100%;
+  max-width: clamp(260px, 35vw, 560px);
+
+  align-self: flex-end;
+
   object-fit: contain;
-  filter: drop-shadow(0 20px 35px rgba(0, 0, 0, 0.35));
+  object-position: bottom center;
+
+  display: block;
+
+  filter:
+    drop-shadow(0 70px 80px rgba(0,0,0,.45))
+    drop-shadow(0 20px 25px rgba(0,0,0,.25));
+
+  transition: transform .35s ease;
 }
 
-/* ================= CARD FORM ================= */
+
+
+/* CARD PREMIUM CENTRADA */
+
 .card {
-  width: 100%;
-  max-width: 1100px; /* centrado y más angosto */
-  margin-top: -80px;
-  margin-bottom: 60px;
-  background: white;
-  border-radius: 22px;
-  padding: 40px;
+  width: min(92%, 1100px);
+  margin: 0px auto 60px auto;
+
+  background: linear-gradient(180deg, #ffffff 0%, #fafafa 100%);
+  border-radius: 24px;
+  padding: 42px;
+
+  border-top: 6px solid #E10613;
+
   box-shadow:
-    0 20px 40px rgba(0,0,0,0.08),
-    0 6px 12px rgba(0,0,0,0.05);
+    0 40px 80px rgba(0,0,0,0.12),
+    0 15px 25px rgba(0,0,0,0.06);
+
   position: relative;
   z-index: 10;
+
+  transition: transform .25s ease, box-shadow .25s ease;
 }
 
-/* ======= NUEVO: mensaje éxito ======= */
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    0 55px 95px rgba(0,0,0,0.16),
+    0 18px 30px rgba(0,0,0,0.08);
+}
+
+
+/* MENSAJE ÉXITO */
+
 .success {
   grid-column: 1 / -1;
   background: #e6ffed;
@@ -112,31 +156,26 @@ body {
   padding: 14px 16px;
   border-radius: 14px;
   font-weight: 700;
-  margin-bottom: 12px;
-  animation: showSuccess 0.6s ease-out;
+  margin-bottom: 14px;
 }
 
-@keyframes showSuccess {
-  from {
-    opacity: 0;
-    transform: translateY(-8px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
+
+/* SECCIONES */
 
 .section {
   grid-column: 1 / -1;
   margin-top: 28px;
-  margin-bottom: 8px;
-  font-size: 1.2rem;
+  margin-bottom: 10px;
+  font-size: 1.15rem;
   font-weight: 700;
-  color: #891e1e;
+  color: #b5121b;
+  border-left: 4px solid #E10613;
+  padding-left: 10px;
 }
 
-/* ================= FORM ================= */
+
+/* FORM */
+
 form {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -149,39 +188,40 @@ form {
 
 label {
   display: block;
-  font-size: 0.95rem;
+  font-size: .95rem;
   font-weight: 600;
-  margin-bottom: 5px;
+  margin-bottom: 6px;
 }
 
 input,
 select,
 textarea {
   width: 100%;
-  padding: 12px 14px;
-  border-radius: 12px;
+  padding: 13px 15px;
+  border-radius: 14px;
   border: 1px solid #dcdfe3;
   font-size: 14px;
   background: #fafbfc;
-  color: #000;
-  transition: 0.2s;
+  transition: .2s;
 }
 
 input:focus,
 select:focus,
 textarea:focus {
   outline: none;
-  border-color: #891e1e;
   background: white;
-  box-shadow: 0 0 0 3px rgba(137,30,30,0.12);
+  border-color: #891e1e;
+  box-shadow: 0 0 0 4px rgba(137,30,30,.12);
 }
 
 textarea {
   resize: vertical;
-  min-height: 110px;
+  min-height: 120px;
 }
 
-/* ================= CHECKBOX & RADIO ================= */
+
+/* CHECKS */
+
 .checkbox-group,
 .radio-group {
   display: grid;
@@ -194,22 +234,14 @@ textarea {
 .radio {
   display: grid;
   grid-template-columns: 18px 1fr;
-  align-items: start;
   gap: 8px;
-  padding: 9px 12px;
-  background: #f7f7f7;
+  padding: 10px 12px;
+  background: #f6f7f9;
   border: 1px solid #e3e3e3;
-  border-radius: 10px;
-  font-size: 0.88rem;
-  line-height: 1.35;
+  border-radius: 12px;
+  font-size: .88rem;
   cursor: pointer;
-  transition: 0.15s;
-}
-
-.checkbox input,
-.radio input {
-  margin-top: 3px;
-  transform: scale(1.05);
+  transition: .15s;
 }
 
 .checkbox:hover,
@@ -224,60 +256,81 @@ textarea {
   border-color: #891e1e;
 }
 
-/* ================= BUTTON ================= */
+
+/* BOTÓN */
+
 button {
   grid-column: 1 / -1;
-  margin-top: 18px;
+  margin-top: 22px;
   background: linear-gradient(135deg, #7a0a0a, #5e0b0b);
   color: white;
-  padding: 15px;
+  padding: 16px;
   font-size: 15px;
   font-weight: 700;
   border: none;
-  border-radius: 14px;
+  border-radius: 16px;
   cursor: pointer;
-  transition: 0.2s;
+  transition: .25s;
 }
 
 button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 22px rgba(0,0,0,0.18);
+  transform: translateY(-3px);
+  box-shadow: 0 14px 26px rgba(0,0,0,.2);
 }
 
 button:disabled {
-  cursor: not-allowed;
-  opacity: 0.6;
+  opacity: .6;
 }
 
-/* ================= RESPONSIVE ================= */
-@media (max-width: 900px) {
+
+/* RESPONSIVE */
+
+@media (max-width: 1024px) {
+  .hero-content { gap: 40px; }
+  .card { padding: 30px; }
+}
+
+@media (max-width: 768px) {
   .hero-content {
     flex-direction: column;
     text-align: center;
+    gap: 30px;
+    align-items: flex-end;
+
   }
 
   .hero-img {
-    max-width: 240px;
-    margin-top: 20px;
+    order: 2;
+    margin-top: 15px;
+    max-width: 320px;
   }
+
+  .hero-text { order: 1; }
 
   form {
     grid-template-columns: 1fr;
   }
 
   .card {
-    padding: 26px;
-  }
-
-  .hero-text h1 {
-    font-size: 1.9rem;
+    width: 94%;
+    margin-top: -70px;
+    padding: 22px;
+    border-radius: 18px;
   }
 }
 
-input:-webkit-autofill,
-textarea:-webkit-autofill,
-select:-webkit-autofill {
-  -webkit-box-shadow: 0 0 0px 1000px #fafbfc inset !important;
-  box-shadow: 0 0 0px 1000px #fafbfc inset !important;
-  -webkit-text-fill-color: #000 !important;
+@media (min-width: 1800px) {
+  .hero-content { max-width: 1600px; }
+  .card { max-width: 1300px; }
+  .hero-text h1 { font-size: 4.2rem; }
+}
+
+input,
+select,
+textarea {
+  color: #2d3436;  
+}
+
+select option {
+  color: #2d3436;  
 }
