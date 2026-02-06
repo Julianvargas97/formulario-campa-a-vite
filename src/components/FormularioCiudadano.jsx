@@ -373,7 +373,15 @@ export default function FormularioCiudadano() {
                     <label className="checkbox full">
                         <input type="checkbox" name="datos" checked={form.datos} required onChange={handleChange} />
                         <span>
-                            Acepto el tratamiento de mis datos personales para fines relacionados con la campaña política de César Cristian Representante a la Cámara por El Cauca. He leído y entendido la Política de Tratamiento de Datos Personales disponible en www.cesarcristian.com.
+                          Autorizo de manera expresa y voluntaria el tratamiento de mis
+                          datos personales y el envío de comunicaciones informativas
+                          relacionadas con la campaña política de César Cristian,
+                          Representante a la Cámara por el Cauca, a través de WhatsApp y
+                          otros medios electrónicos, en el número que proporciono. Declaro
+                          que he leído y comprendido la Política de Tratamiento de Datos
+                          Personales, disponible en www.cesarcristian.com , y que puedo
+                          revocar esta autorización en cualquier momento solicitando la
+                          baja.
                         </span>
                     </label>
 
