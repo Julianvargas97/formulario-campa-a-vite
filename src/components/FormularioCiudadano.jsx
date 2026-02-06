@@ -42,7 +42,7 @@ export default function FormularioCiudadano() {
             setForm({ ...form, [name]: checked });
         } else {
             // ------------- 🚀 CONCANTENAR MUNICIPIO -------------
-if (name === "municipioSelect") {
+            if (name === "municipioSelect") {
                 const valueConCauca = `${value}, Cauca, Colombia`;
 
                 setForm({
@@ -263,8 +263,8 @@ if (name === "municipioSelect") {
 
                     <label>¿En qué municipio del Cauca reside actualmente? *</label>
                     <select
-  name="municipioSelect"
-                          value={form.municipio || ""}
+                        name="municipioSelect"
+                        value={form.municipio || ""}
                         required
                         onChange={handleChange}
                     >
