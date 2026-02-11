@@ -5,6 +5,7 @@
   font-family: "Segoe UI", Roboto, Arial, sans-serif;
 }
 
+
 body {
   background: linear-gradient(180deg, #eef2f6, #f7f9fb);
   color: #2d3436;
@@ -21,13 +22,12 @@ body {
 }
 
 
-/* HERO */
-
 .hero {
   width: 100%;
 .hero {
-  padding: clamp(25px, 4vw, 60px) 5% 0;
+  padding: 15px 5% 130px;
 }
+
   color: white;
   position: relative;
   overflow: hidden;
@@ -44,10 +44,11 @@ body {
     );
 }
 
+
 .hero::after {
   content: "";
   position: absolute;
-  bottom: -15px;
+  bottom: -90px;
   width: 100%;
   height: 160px;
   background: #ffffff;
@@ -57,22 +58,32 @@ body {
 }
 
 .hero-content {
-  width: min(95%, 1400px);
+  width: min(92%, 1200px); 
   margin: 0 auto;
+
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 70px;
-  position: relative;
-  z-index: 2;
+  justify-content: center;
+  gap: 60px;
 }
 
 
-/* TEXTO */
+
+.hero-text ul {
+  margin-top: 14px;
+  line-height: 1.8;
+  font-weight: 600;
+}
+.hero-text em {
+  opacity: .85;
+  font-size: .95rem;
+}
+
 
 .hero-text {
   flex: 1;
-  max-width: 650px;
+  max-width: 600px;
+  margin-left: 20px; 
 }
 
 .hero-text h1 {
@@ -85,15 +96,16 @@ body {
 .hero-text p {
   font-size: clamp(0.95rem, 1.3vw, 1.15rem);
   opacity: .95;
+  line-height: 1.65;
+  margin-bottom: 14px;
 }
+
 
 .hero-text .nota {
   margin-top: 14px;
   font-weight: 700;
 }
 
-
-/* IMAGEN */
 
 .hero-img {
   flex: 1;
@@ -114,9 +126,6 @@ body {
   transition: transform .35s ease;
 }
 
-
-
-/* CARD PREMIUM CENTRADA */
 
 .card {
   width: min(92%, 1100px);
@@ -146,8 +155,6 @@ body {
 }
 
 
-/* MENSAJE ÉXITO */
-
 .success {
   grid-column: 1 / -1;
   background: #e6ffed;
@@ -160,8 +167,6 @@ body {
 }
 
 
-/* SECCIONES */
-
 .section {
   grid-column: 1 / -1;
   margin-top: 28px;
@@ -173,8 +178,6 @@ body {
   padding-left: 10px;
 }
 
-
-/* FORM */
 
 form {
   display: grid;
@@ -220,8 +223,6 @@ textarea {
 }
 
 
-/* CHECKS */
-
 .checkbox-group,
 .radio-group {
   display: grid;
@@ -257,8 +258,6 @@ textarea {
 }
 
 
-/* BOTÓN */
-
 button {
   grid-column: 1 / -1;
   margin-top: 22px;
@@ -282,8 +281,6 @@ button:disabled {
   opacity: .6;
 }
 
-
-/* RESPONSIVE */
 
 @media (max-width: 1024px) {
   .hero-content { gap: 40px; }

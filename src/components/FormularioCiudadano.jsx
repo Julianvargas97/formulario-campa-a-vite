@@ -158,34 +158,51 @@ export default function FormularioCiudadano() {
     ];
 
     const interesOpciones = [
-        "No conozco a César Cristian pero me interesa conocer su causa",
-        "Conozco a César Cristian y quiero hacer parte de la campaña",
-        "Sigo a César Cristian en redes sociales y me interesa promoverlo",
-        "Soy líder, promuevo a César Cristian y quiero trabajar más activamente",
-        "Trabajo activamente por César Cristian y quiero pertenecer a su estructura",
-        "Hago parte de la estructura de campaña de César Cristian"
-    ];
+  "🔥 Soy líder, promuevo a César Cristian y quiero trabajar más activamente",
+  "Trabajo activamente por César Cristian y quiero pertenecer a su estructura",
+  "Hago parte de la estructura de campaña de César Cristian",
+  "Conozco a César Cristian y quiero hacer parte de la campaña",
+  "Sigo a César Cristian en redes sociales y me interesa promoverlo",
+  "No conozco a César Cristian pero me interesa conocer su causa"
+];
+
 
     return (
         <div className="contenedor">
 
             {/* ================= HERO ================= */}
-            {/* ================= HERO MEJORADO ================= */}
             <section className="hero">
                 <div className="hero-content">
 
                     <div className="hero-text">
                         <h1>
-                            Formulario de vinculación - César Cristian a la Cámara L-101
+                            REGISTRO OFICIAL DE LIDERAZGO
+
                         </h1>
 
-                        <p>
-                            ¡Gracias por su interés en apoyar la campaña de César Cristian!
-                            Con este formulario recopilamos información para coordinar su colaboración.
+                        <p style={{ fontWeight: "bold", marginTop: "10px" }}>
+                            “Organicemos la casa para ganar”
                         </p>
 
+                        <p>
+                            Este equipo se construye con organización, no improvisación.
+                        </p>
+
+                        <p className="warning">
+                            ⚠️ El que no se registra, no existe en el sistema.
+                        </p>
+
+
                         <p className="nota">
-                            SI DESEAS QUE SE COLOQUE EL MICROPERFORADO A TU CARRO MARCA SI EN LA OPCIÓN CORRESPONDIENTE.
+                            ✔ Registra tus datos reales<br />
+                            ✔ Obtén tu <strong>Link Único de Líder</strong><br />
+                            ✔ Comparte y fortalece tu equipo
+                        </p>
+
+                        <p style={{ fontStyle: "italic", marginTop: "12px" }}>
+                            “Reviso personalmente el crecimiento de cada equipo.”
+                            <br />
+                            — César Cristian Gómez Castro
                         </p>
                     </div>
 
@@ -204,7 +221,7 @@ export default function FormularioCiudadano() {
             {/* ================= CARD FORM ================= */}
             <div className="card">
                 <form
-                    action="https://script.google.com/macros/s/AKfycbwyIyQYScWefEOrZgMHOsslNjTixr-6DabF22iy0TCFsX3NS3dwKIe5BAPCg_4-i61l/exec"
+                    action="https://script.google.com/macros/s/AKfycbw1so1eBCleKt42WMarFduI06sEiONRIZW_t0D3ZHy8pW6qnbVN2nurGv0z879gMjQ3/exec"
                     method="POST"
                     target="_blank"
                     onSubmit={handleSubmit}
@@ -377,11 +394,14 @@ export default function FormularioCiudadano() {
                         </span>
                     </label>
 
-                    <button type="submit">
-                        Enviar formulario
-                    </button>
+                    <button type="submit" className="btn-submit">
+    🔴 UNIRME AL EQUIPO Y REGISTRARME
+</button>
+
+
                 </form>
             </div>
         </div>
     );
 }
+
